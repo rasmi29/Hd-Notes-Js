@@ -64,4 +64,14 @@ const emailValidator = () => {
   ];
 };
 
-export { userRegistrationValidator, emailOtpValidator, emailValidator };
+const noteValidator = () => [
+  body("title")
+    .notEmpty().withMessage("Title is required")
+    .isLength({ max: 100 }).withMessage("Title cannot exceed 100 characters"),
+
+  body("content")
+    .notEmpty().withMessage("Content is required")
+    .isLength({ max: 10000 }).withMessage("Content cannot exceed 10000 characters")
+];
+
+export { userRegistrationValidator, emailOtpValidator, emailValidator, noteValidator };
