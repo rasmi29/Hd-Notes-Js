@@ -53,7 +53,7 @@ const registerUser = asyncHandler(async (req, res) => {
     .json(new ApiResponse(201, safeUser, "User created successfully"));
 });
 
-//send otp or resend otp to user for login 
+//send otp or resend otp to user for login
 const sendOTP = asyncHandler(async (req, res) => {
   //fetch data
   const { email } = req.body;
@@ -159,20 +159,20 @@ const verifyOTP = asyncHandler(async (req, res) => {
 
 //logout user
 const logoutUser = asyncHandler(async (req, res) => {
-    //fetch user data ;
+  //fetch user data ;
 
-    const { email } = req.user;
+  const { email } = req.user;
 
-    const user = await User.findOne({ email });
+  const user = await User.findOne({ email });
 
-    user.refreshToken = undefined;
+  user.refreshToken = undefined;
 
-    await user.save();
+  await user.save();
 
-    res.clearCookie("refreshToken", {
-        httpOnly: true,
-    });
-    res.status(200).json(
-        new ApiResponse(200, "user logged out successfully"),
-    );
+  res.clearCookie("refreshToken", {
+    httpOnly: true,
+  });
+  res.status(200).json(new ApiResponse(200, "user logged out successfully"));
 });
+
+export { registerUser, sendOTP, verifyOTP, logoutUser };
