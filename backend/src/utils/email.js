@@ -39,13 +39,13 @@ const sendMail = async (options) => {
     }
 }
 
-const emailOtpMailGenContent  = (username, otp) => {
+const emailOtpMailGenContent  = (name, otp) => {
     return {
         body: {
-            name: username,
+            name: name,
             intro: "Welcome to HD_Notes! We're very excited to have you on board.",
             action: {
-                instructions: "Use the following One-Time Password (OTP) to complete your login or signup process:",
+                instructions: "Use the following One-Time Password (OTP) to access the platform:",
                 button: {
                     color: "#22BC66", 
                     text: `Your OTP: ${otp}`,
