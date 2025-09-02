@@ -11,11 +11,11 @@ const userRegistrationValidator = () => {
       .isLength({ max: 50 })
       .withMessage("Name must not exceed 50 characters"),
 
-    body("dob")
+    body("dateOfBirth")
       .notEmpty()
       .withMessage("Date of Birth is required")
-      .isDate({ format: "DD-MM-YYYY" }) 
-      .withMessage("DOB must be a valid date (DD-MM-YYYY)")
+      .isDate({ format: "YYYY-MM-DD" }) 
+      .withMessage("DOB must be a valid date (YYYY-MM-DD)")
       .custom((value) => {
         const today = new Date();
         const dob = new Date(value);

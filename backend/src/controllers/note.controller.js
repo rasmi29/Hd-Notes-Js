@@ -1,7 +1,7 @@
-import ApiError from "../utils/api-error";
-import ApiResponse from "../utils/api-response";
-import asyncHandler from "../utils/async-handler";
-import Note from "../models/Note.model";
+import ApiError from "../utils/api-error.js";
+import ApiResponse from "../utils/api-response.js";
+import asyncHandler from "../utils/async-handler.js";
+import Note from "../models/Note.model.js";
 
 //get all notes of a user
 const getAllNotes = asyncHandler(async (req, res) => {
@@ -47,7 +47,7 @@ const deleteNote = asyncHandler(async (req, res) => {
   //fetch note id
   const { noteId } = req.params;
   //fetch note from database
-  const note = await Note.findOne({ _id: noteId, userId: req.user.id });
+  const note = await Note.findOne({ _id: noteId, userId: req.user._id });
   //validate note
   if (!note) {
     throw new ApiError(404, "Note not found or unauthorized");
@@ -63,7 +63,7 @@ const getNote = asyncHandler(async (req, res) => {
   //fetch note id
   const { noteId } = req.params;
   //fetch note from database
-  const note = await Note.findOne({ _id: noteId, userId: req.user.id });
+  const note = await Note.findOne({ _id: noteId, userId: req.user._id });
   //validate note
   if (!note) {
     throw new ApiError(404, "Note not found or unauthorized");

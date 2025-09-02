@@ -1,8 +1,8 @@
 import { Router } from "express";
-import isLoggedIn from "../middleware/isLogin.middleware";
-import { getAllNotes, getNote, deleteNote, createNote } from "../controllers/note.controller";
-import { noteValidator } from "../validators/validator";
-import validate from "../middleware/validator.middleware";
+import isLoggedIn from "../middleware/isLogin.middleware.js";
+import { getAllNotes, getNote, deleteNote, createNote } from "../controllers/note.controller.js";
+import { noteValidator } from "../validators/validator.js";
+import validate from "../middleware/validator.middleware.js";
 
 const router = Router();
 
