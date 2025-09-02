@@ -4,6 +4,7 @@ import asyncHandler from "../utils/async-handler.js";
 import User from "../models/User.model.js";
 import bcrypt from "bcryptjs";
 import { sendMail, emailOtpMailGenContent } from "../utils/email.js";
+import generateOTP from "../utils/otp.js";
 
 //register user
 const registerUser = asyncHandler(async (req, res) => {
