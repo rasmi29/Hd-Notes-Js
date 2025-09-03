@@ -1,8 +1,16 @@
 //import express
 import express from "express";
+import cors from "cors"
 
 //create server
 const app = express();
+
+//cors enable 
+app.use(cors({
+  origin: "http://localhost:5173",  // frontend URL
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  credentials: true
+}));
 
 //json & form parsing
 app.use(express.json());

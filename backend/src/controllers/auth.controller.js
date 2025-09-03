@@ -87,11 +87,9 @@ const sendOTP = asyncHandler(async (req, res) => {
 
   await user.save();
 
-  return res.status(200).json(
-    new ApiResponse(200, {
-      message: "Login otp sent successful",
-    })
-  );
+  return res
+    .status(200)
+    .json(new ApiResponse(200, email, "Login otp sent successful"));
 });
 
 //verify otp
@@ -147,14 +145,20 @@ const verifyOTP = asyncHandler(async (req, res) => {
   await user.save();
 
   return res.status(200).json(
-    new ApiResponse(200, {
-      message: "user otp verified. Login successfully",
-      user: {
-        _id: user._id,
-        email: user.email,
-        accessToken,
+    new ApiResponse(
+      200,
+      {
+        user: {
+          _id: user._id,
+          email: user.email,
+          name:user.name,
+          dateOfBirth:user.dateOfBirth,
+          createdAt:user.createdAt
+        },
+        token:accessToken,
       },
-    })
+      "user otp verified. Login successfully"
+    )
   );
 });
 

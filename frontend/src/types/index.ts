@@ -1,5 +1,5 @@
 export interface User {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   dateOfBirth: string;
@@ -19,7 +19,7 @@ export interface AuthResponse {
   message: string;
   token?: string;
   user?: User;
-  userId?: string;
+  _id?: string;
 }
 
 export interface SignUpData {

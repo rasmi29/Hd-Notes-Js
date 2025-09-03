@@ -1,5 +1,8 @@
+// src/services/api.ts
 import axios from "axios";
+import type { InternalAxiosRequestConfig } from "axios";
 import { useAuth } from "../context/AuthContext";
+
 import type {
   AuthResponse,
   SignUpData,
@@ -7,52 +10,50 @@ import type {
   OTPVerificationData,
   CreateNoteData,
   Note,
-} from "../types/index.ts";
+} from "../types";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 export const useApi = () => {
-  const { token, login, logout, user } = useAuth();
+  const { token } = useAuth();
 
   const api = axios.create({
     baseURL: API_BASE_URL,
     headers: { "Content-Type": "application/json" },
-    withCredentials: true, // ✅ send refresh token cookie
+    withCredentials: true,
   });
 
-  // attach access token
-  api.interceptors.request.use((config) => {
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+  // Attach token safely
+  api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+    let authToken = token;
+
+    const stored = localStorage.getItem("hdnotes_auth");
+    if (!authToken && stored) {
+      try {
+        authToken = JSON.parse(stored).token;
+      } catch {}
     }
+
+    if (authToken) {
+      // Ensure headers exist
+      config.headers = config.headers ?? {};
+      // Assign token
+      (config.headers as Record<string, string>)["Authorization"] = `Bearer ${authToken}`;
+    }
+
     return config;
   });
 
-  // handle refresh / errors
   api.interceptors.response.use(
-    (response) => {
-      // ✅ backend sends new access token in headers
-      const newAccessToken = response.headers["authorization"]?.split(" ")[1];
-      if (newAccessToken && user) {
-        login(newAccessToken, user); // update context
-      }
-      return response;
-    },
-    (error) => {
-      if (error.response?.status === 401) {
-        logout();
-        window.location.href = "/signin";
-      }
-      return Promise.reject(error);
-    }
+    (response) => response,
+    (error) => Promise.reject(error)
   );
 
-  //auth API
-  
+  // Auth API
   const authAPI = {
     signUp: async (data: SignUpData): Promise<AuthResponse> => {
-      const response = await api.post("/auth/signup", data);
+      const response = await api.post("/auth/register", data);
       return response.data;
     },
     verifyOTP: async (data: OTPVerificationData): Promise<AuthResponse> => {
@@ -60,21 +61,20 @@ export const useApi = () => {
       return response.data;
     },
     signIn: async (data: SignInData): Promise<AuthResponse> => {
-      const response = await api.post("/auth/signin", data);
+      const response = await api.post("/auth/send-otp", data);
       return response.data;
     },
     verifySignInOTP: async (data: OTPVerificationData): Promise<AuthResponse> => {
-      const response = await api.post("/auth/signin/verify-otp", data);
+      const response = await api.post("/auth/verify-otp", data);
       return response.data;
     },
-    resendOTP: async (userId: string): Promise<AuthResponse> => {
-      const response = await api.post("/auth/resend-otp", { userId });
+    resendOTP: async (email: string): Promise<AuthResponse> => {
+      const response = await api.post("/auth/send-otp", { email });
       return response.data;
     },
   };
 
-  //notes api
-  
+  // Notes API
   const notesAPI = {
     getAllNotes: async (): Promise<{ notes: Note[]; count: number }> => {
       const response = await api.get("/note/all");
