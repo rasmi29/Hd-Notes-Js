@@ -3,11 +3,11 @@ import Button from '../common/Button';
 import type { OTPVerificationData } from '../../types';
 
 interface OTPVerificationProps {
-  userId: string;
+  userId?: string; 
   email: string;
   onSubmit: (data: OTPVerificationData) => Promise<void>;
   onResendOTP: () => Promise<void>;
-  type: 'signup' | 'signin';
+  type: "signup" | "signin";
 }
 
 const OTPVerification: React.FC<OTPVerificationProps> = ({
@@ -70,7 +70,7 @@ const OTPVerification: React.FC<OTPVerificationProps> = ({
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* OTP Input */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block mb-2 text-sm font-medium text-gray-700">
             Enter OTP sent to {email}
           </label>
           <div className="relative">
@@ -84,14 +84,14 @@ const OTPVerification: React.FC<OTPVerificationProps> = ({
               }`}
               maxLength={6}
             />
-            <div className="absolute inset-y-0 right-3 flex items-center">
+            <div className="absolute inset-y-0 flex items-center right-3">
               <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
               </svg>
             </div>
           </div>
           {error && (
-            <p className="text-sm text-red-600 mt-1">{error}</p>
+            <p className="mt-1 text-sm text-red-600">{error}</p>
           )}
         </div>
 
@@ -115,7 +115,7 @@ const OTPVerification: React.FC<OTPVerificationProps> = ({
           <button
             onClick={handleResendOTP}
             disabled={resendLoading}
-            className="text-sm text-blue-600 hover:text-blue-700 font-medium disabled:opacity-50"
+            className="text-sm font-medium text-blue-600 hover:text-blue-700 disabled:opacity-50"
           >
             {resendLoading ? 'Sending...' : 'Resend OTP'}
           </button>

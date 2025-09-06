@@ -8,34 +8,42 @@ import Layout from './components/common/Layout';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
+  
+  const storedAuth = localStorage.getItem("hdnotes_auth");
+  const isStoredAuthenticated = storedAuth ? !!JSON.parse(storedAuth).token : false;
 
   if (loading) {
     return (
       <Layout>
         <div className="flex items-center justify-center min-h-screen">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          <div className="w-12 h-12 border-b-2 border-blue-600 rounded-full animate-spin"></div>
         </div>
       </Layout>
     );
   }
 
-  return isAuthenticated ? <>{children}</> : <Navigate to="/signin" replace />;
+  return (isAuthenticated || isStoredAuthenticated) ? <>{children}</> : <Navigate to="/signin" replace />;
 };
 
 const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
+  
+  // ADDED: Check localStorage as fallback to handle timing issues
+  const storedAuth = localStorage.getItem("hdnotes_auth");
+  const isStoredAuthenticated = storedAuth ? !!JSON.parse(storedAuth).token : false;
 
   if (loading) {
     return (
       <Layout>
         <div className="flex items-center justify-center min-h-screen">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          <div className="w-12 h-12 border-b-2 border-blue-600 rounded-full animate-spin"></div>
         </div>
       </Layout>
     );
   }
 
-  return isAuthenticated ? <Navigate to="/dashboard" replace /> : <>{children}</>;
+  // CHANGED: Check both AuthContext state and localStorage
+  return (isAuthenticated || isStoredAuthenticated) ? <Navigate to="/dashboard" replace /> : <>{children}</>;
 };
 
 const App: React.FC = () => {

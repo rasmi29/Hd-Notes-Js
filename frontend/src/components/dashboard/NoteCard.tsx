@@ -24,15 +24,15 @@ const NoteCard: React.FC<NoteCardProps> = ({ note, onDelete }) => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow">
+    <div className="p-6 transition-shadow bg-white border border-gray-100 shadow-sm rounded-xl hover:shadow-md">
       {/* Note Header */}
       <div className="flex items-start justify-between mb-4">
         <h4 className="text-lg font-semibold text-gray-900 line-clamp-2">
           {note.title}
         </h4>
         <button
-          onClick={() => onDelete(note.id)}
-          className="text-gray-400 hover:text-red-500 transition-colors p-1"
+          onClick={() => onDelete(note._id)}
+          className="p-1 text-gray-400 transition-colors hover:text-red-500"
           title="Delete note"
         >
           <Trash2 size={18} />
@@ -40,7 +40,7 @@ const NoteCard: React.FC<NoteCardProps> = ({ note, onDelete }) => {
       </div>
 
       {/* Note Content */}
-      <p className="text-gray-600 text-sm mb-4 line-clamp-4">
+      <p className="mb-4 text-sm text-gray-600 line-clamp-4">
         {truncateContent(note.content)}
       </p>
 

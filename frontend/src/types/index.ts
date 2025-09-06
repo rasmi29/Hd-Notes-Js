@@ -8,7 +8,7 @@ export interface User {
 }
 
 export interface Note {
-  id: string;
+  _id: string;
   title: string;
   content: string;
   createdAt: string;
@@ -16,10 +16,16 @@ export interface Note {
 }
 
 export interface AuthResponse {
-  message: string;
-  token?: string;
-  user?: User;
-  _id?: string;
+  statusCode?: number;
+  data?: {
+    user?: User;
+    token?: string;
+  };
+  message?: string;
+  success?: boolean;
+  user?: User; 
+  token?: string; 
+  _id?: string; 
 }
 
 export interface SignUpData {

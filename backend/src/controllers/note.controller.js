@@ -32,10 +32,11 @@ const createNote = asyncHandler(async (req, res) => {
     new ApiResponse(
       201,
       {
-        id: note._id,
+        _id: note._id,
         title: note.title,
         content: note.content,
         createdAt: note.createdAt,
+        updatedAt: note.updatedAt,
       },
       "Note created successfully"
     )
@@ -55,7 +56,15 @@ const deleteNote = asyncHandler(async (req, res) => {
   //delete note
   await Note.findByIdAndDelete(noteId);
   //send response
-  res.status(200).json(new ApiResponse(200, "Note deleted successfully"));
+  res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        { message: "Note deleted successfully" },
+        "Note deleted successfully"
+      )
+    );
 });
 
 //get note by id
@@ -69,7 +78,7 @@ const getNote = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Note not found or unauthorized");
   }
   //send response
-  res.status(200).json(new ApiResponse(200,note, "Note fetched successfully"));
+  res.status(200).json(new ApiResponse(200, note, "Note fetched successfully"));
 });
 
 export { getAllNotes, createNote, deleteNote, getNote };

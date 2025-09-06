@@ -11,22 +11,17 @@ import { PlusCircle, LogOut } from "lucide-react";
 
 const Dashboard: React.FC = () => {
   const { notesAPI } = useApi();
-  const { user, logout, loading: authLoading, isAuthenticated } = useAuth();
+  const { user, logout, loading: authLoading } = useAuth(); // REMOVED: isAuthenticated
   const navigate = useNavigate();
   const [notes, setNotes] = useState<Note[]>([]);
   const [loadingNotes, setLoadingNotes] = useState(true);
   const [showCreateModal, setShowCreateModal] = useState(false);
 
   useEffect(() => {
-    if (!authLoading) {
-      if (!isAuthenticated) {
-        navigate("/signin");
-      } else {
-        fetchNotes();
-      }
-    }
+    // CHANGED: Removed authentication check - ProtectedRoute handles this now
+    fetchNotes();
     // eslint-disable-next-line
-  }, [authLoading, isAuthenticated, navigate]);
+  }, []); // REMOVED: authLoading, isAuthenticated, navigate dependencies
 
   const fetchNotes = async () => {
     setLoadingNotes(true);
@@ -56,7 +51,7 @@ const Dashboard: React.FC = () => {
 
     try {
       await notesAPI.deleteNote(noteId);
-      setNotes(notes.filter((note) => note.id !== noteId));
+      setNotes(notes.filter((note) => note._id !== noteId));
       toast.success("Note deleted successfully!");
     } catch (error: any) {
       toast.error("Failed to delete note");
@@ -71,27 +66,27 @@ const Dashboard: React.FC = () => {
 
   if (authLoading || loadingNotes) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+        <div className="w-12 h-12 border-b-2 border-blue-600 rounded-full animate-spin"></div>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-4xl mx-auto p-4 lg:p-8">
+      <div className="max-w-4xl p-4 mx-auto lg:p-8">
         {/* Header */}
-        <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
+        <div className="p-6 mb-8 bg-white shadow-sm rounded-xl">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center">
-              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
-                <span className="text-white font-bold text-xl">HD</span>
+              <div className="flex items-center justify-center w-10 h-10 mr-3 bg-blue-600 rounded-lg">
+                <span className="text-xl font-bold text-white">HD</span>
               </div>
               <h1 className="text-xl font-semibold text-gray-900">Dashboard</h1>
             </div>
             <button
               onClick={handleLogout}
-              className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-2"
+              className="flex items-center gap-2 font-medium text-blue-600 hover:text-blue-700"
             >
               <LogOut size={16} />
               Sign Out
@@ -99,11 +94,11 @@ const Dashboard: React.FC = () => {
           </div>
 
           {/* Welcome */}
-          <div className="bg-gray-50 rounded-lg p-4">
-            <h2 className="text-lg font-semibold text-gray-900 mb-2">
+          <div className="p-4 rounded-lg bg-gray-50">
+            <h2 className="mb-2 text-lg font-semibold text-gray-900">
               Welcome, {user?.name}!
             </h2>
-            <p className="text-gray-600 text-sm">Email: {user?.email}</p>
+            <p className="text-sm text-gray-600">Email: {user?.email}</p>
           </div>
         </div>
 
@@ -111,7 +106,7 @@ const Dashboard: React.FC = () => {
         <div className="mb-6">
           <Button
             onClick={() => setShowCreateModal(true)}
-            className="flex items-center justify-center gap-2 max-w-xs"
+            className="flex items-center justify-center max-w-xs gap-2"
           >
             <PlusCircle size={20} />
             Create Note
@@ -120,16 +115,16 @@ const Dashboard: React.FC = () => {
 
         {/* Notes */}
         <div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Notes</h3>
+          <h3 className="mb-4 text-lg font-semibold text-gray-900">Notes</h3>
           {notes.length === 0 ? (
-            <div className="bg-white rounded-xl shadow-sm p-8 text-center">
-              <div className="text-gray-400 mb-4">
+            <div className="p-8 text-center bg-white shadow-sm rounded-xl">
+              <div className="mb-4 text-gray-400">
                 <PlusCircle size={48} className="mx-auto" />
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              <h3 className="mb-2 text-lg font-semibold text-gray-900">
                 No notes yet
               </h3>
-              <p className="text-gray-600 mb-4">
+              <p className="mb-4 text-gray-600">
                 Start creating your first note to get organized!
               </p>
               <Button
@@ -143,7 +138,7 @@ const Dashboard: React.FC = () => {
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {notes.map((note) => (
                 <NoteCard
-                  key={note.id}
+                  key={note._id}
                   note={note}
                   onDelete={handleDeleteNote}
                 />

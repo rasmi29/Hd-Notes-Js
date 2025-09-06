@@ -29,16 +29,30 @@ const SignUp: React.FC = () => {
   };
 
   const handleOTPVerification = async (data: OTPVerificationData) => {
-    try {
-      const response = await authAPI.verifyOTP(data);
-      login(response.token!, response.user!, () => {
+  try {
+    const response = await authAPI.verifyOTP(data) as any; // Temporary any type
+    
+    // Check if the response has the expected nested structure
+    if (response?.data?.token && response?.data?.user) {
+      login(response.data.token, response.data.user, () => {
         toast.success("Account created successfully!");
         navigate("/dashboard");
       });
-    } catch (error: any) {
-      toast.error(error.response?.data?.error || "OTP verification failed");
+    } else if (response?.token && response?.user) {
+      // Fallback for old structure
+      login(response.token, response.user, () => {
+        toast.success("Account created successfully!");
+        navigate("/dashboard");
+      });
+    } else {
+      console.error("Invalid response structure:", response);
+      toast.error("Invalid response from server. Please try again.");
     }
-  };
+  } catch (error: any) {
+    console.error("OTP verification error:", error);
+    toast.error(error.response?.data?.error || "OTP verification failed");
+  }
+};
 
   const handleResendOTP = async () => {
     try {
@@ -53,13 +67,13 @@ const SignUp: React.FC = () => {
     <Layout>
       <div className="w-full">
         {/* Header */}
-        <div className="text-center mb-8">
+        <div className="mb-8 text-center">
           <div className="flex items-center justify-center mb-4">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">HD</span>
+            <div className="flex items-center justify-center w-8 h-8 bg-blue-600 rounded-lg">
+              <span className="text-lg font-bold text-white">HD</span>
             </div>
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Sign up</h1>
+          <h1 className="mb-2 text-2xl font-bold text-gray-900">Sign up</h1>
           <p className="text-gray-600">Sign up to enjoy the feature of HD</p>
         </div>
 
@@ -77,11 +91,11 @@ const SignUp: React.FC = () => {
         )}
 
         {/* Footer */}
-        <div className="text-center mt-6">
+        <div className="mt-6 text-center">
           <span className="text-gray-600">Already have an account? </span>
           <Link
             to="/signin"
-            className="text-blue-600 hover:text-blue-700 font-medium"
+            className="font-medium text-blue-600 hover:text-blue-700"
           >
             Sign in
           </Link>
