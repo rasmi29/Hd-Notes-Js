@@ -14,7 +14,7 @@ const userRegistrationValidator = () => {
     body("dateOfBirth")
       .notEmpty()
       .withMessage("Date of Birth is required")
-      .isDate({ format: "YYYY-MM-DD" }) 
+      .isDate({ format: "YYYY-MM-DD" })
       .withMessage("DOB must be a valid date (YYYY-MM-DD)")
       .custom((value) => {
         const today = new Date();
@@ -30,28 +30,28 @@ const userRegistrationValidator = () => {
       .notEmpty()
       .withMessage("Email is required")
       .isEmail()
-      .withMessage("Please enter a valid email")
+      .withMessage("Please enter a valid email"),
   ];
 };
 
 const emailOtpValidator = () => {
-    return [
-        body("email")
-            .trim()
-            .notEmpty()
-            .withMessage("Email is required")
-            .isEmail()
-            .withMessage("Please enter a valid email"),
+  return [
+    body("email")
+      .trim()
+      .notEmpty()
+      .withMessage("Email is required")
+      .isEmail()
+      .withMessage("Please enter a valid email"),
 
-        body("otp")
-            .trim()
-            .notEmpty()
-            .withMessage("OTP is required")
-            .isNumeric()
-            .withMessage("OTP must be a number")
-            .isLength({ min: 6, max: 6 })
-            .withMessage("OTP must be exactly 6 digits"),
-    ];
+    body("otp")
+      .trim()
+      .notEmpty()
+      .withMessage("OTP is required")
+      .isNumeric()
+      .withMessage("OTP must be a number")
+      .isLength({ min: 6, max: 6 })
+      .withMessage("OTP must be exactly 6 digits"),
+  ];
 };
 
 const emailValidator = () => {
@@ -66,12 +66,21 @@ const emailValidator = () => {
 
 const noteValidator = () => [
   body("title")
-    .notEmpty().withMessage("Title is required")
-    .isLength({ max: 100 }).withMessage("Title cannot exceed 100 characters"),
+    .notEmpty()
+    .withMessage("Title is required")
+    .isLength({ max: 100 })
+    .withMessage("Title cannot exceed 100 characters"),
 
   body("content")
-    .notEmpty().withMessage("Content is required")
-    .isLength({ max: 10000 }).withMessage("Content cannot exceed 10000 characters")
+    .notEmpty()
+    .withMessage("Content is required")
+    .isLength({ max: 10000 })
+    .withMessage("Content cannot exceed 10000 characters"),
 ];
 
-export { userRegistrationValidator, emailOtpValidator, emailValidator, noteValidator };
+export {
+  userRegistrationValidator,
+  emailOtpValidator,
+  emailValidator,
+  noteValidator,
+};

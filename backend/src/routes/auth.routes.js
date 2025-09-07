@@ -1,8 +1,17 @@
 import { Router } from "express";
 import isLoggedIn from "../middleware/isLogin.middleware.js";
 import validate from "../middleware/validator.middleware.js";
-import { registerUser, logoutUser, verifyOTP, sendOTP } from "../controllers/auth.controller.js";
-import { userRegistrationValidator, emailOtpValidator, emailValidator } from "../validators/validator.js";
+import {
+  registerUser,
+  logoutUser,
+  verifyOTP,
+  sendOTP,
+} from "../controllers/auth.controller.js";
+import {
+  userRegistrationValidator,
+  emailOtpValidator,
+  emailValidator,
+} from "../validators/validator.js";
 
 const router = Router();
 

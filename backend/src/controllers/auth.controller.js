@@ -13,7 +13,7 @@ const registerUser = asyncHandler(async (req, res) => {
   //check if user exist or not
   const existingUser = await User.findOne({ email });
   if (existingUser) {
-    throw new ApiError(400, "User already exist with this email.");
+    throw new ApiError(409, "User already exist with this email.");
   }
 
   // Generate OTP
@@ -68,9 +68,9 @@ const sendOTP = asyncHandler(async (req, res) => {
   //generate otp
   const otpCode = generateOTP();
   const hashedOtp = await bcrypt.hash(otpCode, 10);
-  const otpExpiresAt = new Date(
-    Date.now() + parseInt(process.env.OTP_EXPIRY) * 60 * 1000
-  );
+  //expiry otp
+  const otpExpiryMinutes = parseInt(process.env.OTP_EXPIRY) || 5; // default 5 minutes
+  const otpExpiresAt = new Date(Date.now() + otpExpiryMinutes * 60 * 1000);
 
   //update otp in user database
   user.otp = { code: hashedOtp, expiresAt: otpExpiresAt };
@@ -151,11 +151,11 @@ const verifyOTP = asyncHandler(async (req, res) => {
         user: {
           _id: user._id,
           email: user.email,
-          name:user.name,
-          dateOfBirth:user.dateOfBirth,
-          createdAt:user.createdAt
+          name: user.name,
+          dateOfBirth: user.dateOfBirth,
+          createdAt: user.createdAt,
         },
-        token:accessToken,
+        token: accessToken,
       },
       "user otp verified. Login successfully"
     )
