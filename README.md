@@ -1,5 +1,4 @@
-# Software Requirements Specification (SRS)
-## HD Notes Application
+# HD Notes Application
 
 ---
 
