@@ -188,18 +188,8 @@ Frontend (React TS) → API Gateway → Backend (Node.js) → Database
 
 ---
 
-## **8. Success Criteria**
-- ✅ OTP-based registration & login  
-- ✅ Create & delete notes  
-- ✅ JWT-protected APIs  
-- ✅ Cloud deployment (frontend + backend)  
-- ✅ Database on MongoDB Atlas  
-- ✅ Documentation completed  
-- ✅ Full mobile responsive testing  
 
----
-
-## **9. Technologies Used**
+## **8. Technologies Used**
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg" alt="React" width="60" height="60"/>
@@ -213,3 +203,35 @@ Frontend (React TS) → API Gateway → Backend (Node.js) → Database
 </p>
 
 ---
+
+## **9. Success Criteria**
+- ✅ OTP-based registration & login  
+- ✅ Create & delete notes  
+- ✅ JWT-protected APIs  
+- ✅ Cloud deployment (frontend + backend)  
+- ✅ Database on MongoDB Atlas  
+- ✅ Documentation completed  
+- ✅ Full mobile responsive testing  
+
+### **Planned for Future Versions**
+- [ ] Edit existing notes  
+- [ ] Categorization/tags for better organization  
+- [ ] Search functionality within notes  
+- [ ] Pin/star important notes  
+- [ ] Dark mode support  
+- [ ] Collaboration & note sharing features  
+
+---
+
+## **10. Future Development**
+
+The current version of **HD Notes** provides a secure and minimal note-taking platform with OTP-based authentication. Future releases are expected to introduce the following features:
+
+- ✏️ **Edit Notes:** Update the content or title of existing notes.  
+- 📂 **Categorization/Tags:** Organize notes with tags or categories for easier management.  
+- 🔍 **Search Functionality:** Search through notes using keywords in title or content.  
+- 📌 **Pin/Star Notes:** Highlight important notes at the top of the dashboard.  
+- ☁️ **Cloud Sync:** Enable multi-device access and real-time synchronization.  
+- 🌓 **Dark Mode:** Theme toggle for better user experience across environments.  
+- 🤝 **Collaboration:** Share notes with other users and enable collaborative editing.  
+
