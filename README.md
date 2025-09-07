@@ -1,32 +1,36 @@
 # Software Requirements Specification (SRS)
 ## HD Notes Application
 
+---
+
 ### **Document Information**
-- **Project Name:** HD Notes Application
-- **Version:** 1.0
-- **Date:** September 2025
-- **Prepared for:** Full Stack Development Internship Assignment
+- **Project Name:** HD Notes Application  
+- **Version:** 1.0  
+- **Date:** September 2025  
+- **Prepared for:** Full Stack Development Internship Assignment  
+- **Frontend Deployment:** [HD Notes Frontend](https://apna-note.vercel.app)  
+- **Backend Deployment:** [HD Notes Backend](https://hdnote.onrender.com)  
 
 ---
 
 ## **1. Introduction**
 
 ### **1.1 Purpose**
-This document specifies the requirements for developing a full-stack note-taking application called "HD Notes" that allows users to authenticate via OTP and manage personal notes.
+This document specifies the requirements for developing and maintaining a full-stack note-taking application called **"HD Notes"** that allows users to authenticate via OTP and manage personal notes.
 
 ### **1.2 Scope**
-The HD Notes application will provide:
-- User registration and authentication system
-- OTP-based login mechanism
-- Personal note creation and management
-- Responsive web interface
-- Secure API with JWT authorization
+The HD Notes application provides:
+- User registration and authentication system  
+- OTP-based login mechanism  
+- Personal note creation and management  
+- Responsive web interface  
+- Secure API with JWT authorization  
 
 ### **1.3 Definitions and Acronyms**
-- **OTP:** One-Time Password
-- **JWT:** JSON Web Token
-- **API:** Application Programming Interface
-- **SPA:** Single Page Application
+- **OTP:** One-Time Password  
+- **JWT:** JSON Web Token  
+- **API:** Application Programming Interface  
+- **SPA:** Single Page Application  
 
 ---
 
@@ -34,22 +38,22 @@ The HD Notes application will provide:
 
 ### **2.1 Product Perspective**
 HD Notes is a standalone web application consisting of:
-- React TypeScript frontend (SPA)
-- Node.js JavaScript backend (REST API)
-- Database for user and note storage
-- OTP service integration
+- React TypeScript frontend (SPA)  
+- Node.js JavaScript backend (REST API)  
+- MongoDB for user and note storage  
+- OTP service integration  
 
 ### **2.2 Product Functions**
-- User registration with email validation
-- OTP-based authentication
-- Secure note creation and deletion
-- User session management
-- Responsive UI across devices
+- User registration with email validation  
+- OTP-based authentication  
+- Secure note creation and deletion  
+- User session management  
+- Responsive UI across devices  
 
 ### **2.3 User Characteristics**
-- **Primary Users:** General users who need to take and manage notes
-- **Technical Expertise:** Basic computer/smartphone usage
-- **Access:** Web browsers on desktop and mobile devices
+- **Primary Users:** General users who need to take and manage notes  
+- **Technical Expertise:** Basic computer/smartphone usage  
+- **Access:** Web browsers on desktop and mobile devices  
 
 ---
 
@@ -58,135 +62,155 @@ HD Notes is a standalone web application consisting of:
 ### **3.1 Functional Requirements**
 
 #### **3.1.1 User Authentication**
-- **FR-1.1:** System shall allow user registration with name, date of birth, and email
-- **FR-1.2:** System shall validate email format and uniqueness
-- **FR-1.3:** System shall generate and send OTP to user's email
-- **FR-1.4:** System shall verify OTP for account activation
-- **FR-1.5:** System shall provide OTP resend functionality
-- **FR-1.6:** System shall support "Keep me logged in" option
-- **FR-1.7:** System shall provide secure logout functionality
+- FR-1.1: Register with name, date of birth, and email  
+- FR-1.2: Validate email format and uniqueness  
+- FR-1.3: Generate and send OTP to user’s email  
+- FR-1.4: Verify OTP for account activation  
+- FR-1.5: Support OTP resend functionality  
+- FR-1.6: "Keep me logged in" option  
+- FR-1.7: Secure logout functionality  
 
 #### **3.1.2 Note Management**
-- **FR-2.1:** Authenticated users shall be able to create notes
-- **FR-2.2:** Users shall be able to view their own notes only
-- **FR-2.3:** Users shall be able to delete their notes
-- **FR-2.4:** System shall maintain note ownership and authorization
+- FR-2.1: Create notes (authenticated users only)  
+- FR-2.2: View own notes only  
+- FR-2.3: Delete notes  
+- FR-2.4: Maintain note ownership and authorization  
 
 #### **3.1.3 User Interface**
-- **FR-3.1:** System shall display welcome message with user name
-- **FR-3.2:** System shall show masked email address
-- **FR-3.3:** System shall provide intuitive note management interface
-- **FR-3.4:** System shall show appropriate error messages
+- FR-3.1: Display welcome message with username  
+- FR-3.2: Masked email display  
+- FR-3.3: Intuitive note management interface  
+- FR-3.4: Error messages for invalid operations  
 
 ### **3.2 Non-Functional Requirements**
 
-#### **3.2.1 Performance**
-- **NFR-1.1:** Page load time shall not exceed 3 seconds
-- **NFR-1.2:** API response time shall be under 500ms
-- **NFR-1.3:** OTP delivery shall be within 30 seconds
+#### **Performance**
+- Page load time ≤ 3 seconds  
+- API response time ≤ 500ms  
+- OTP delivery ≤ 30 seconds  
 
-#### **3.2.2 Security**
-- **NFR-2.1:** All API endpoints shall be protected with JWT
-- **NFR-2.2:** OTPs shall expire after 5 minutes
-- **NFR-2.3:** User sessions shall have configurable timeout
-- **NFR-2.4:** Input validation on both client and server side
+#### **Security**
+- All API endpoints protected with JWT  
+- OTP expiry = 5 minutes  
+- Configurable session timeout  
+- Client + server input validation  
 
-#### **3.2.3 Usability**
-- **NFR-3.1:** Interface shall be responsive (mobile + desktop)
-- **NFR-3.2:** Design shall match provided Figma specifications
-- **NFR-3.3:** Error messages shall be user-friendly and actionable
+#### **Usability**
+- Fully responsive interface (mobile + desktop)  
+- Matches provided Figma designs  
+- Clear error messages  
 
-#### **3.2.4 Compatibility**
-- **NFR-4.1:** Support modern browsers (Chrome, Firefox, Safari, Edge)
-- **NFR-4.2:** Mobile compatibility (iOS Safari, Android Chrome)
+#### **Compatibility**
+- Modern browsers (Chrome, Firefox, Safari, Edge)  
+- Mobile support (iOS Safari, Android Chrome)  
 
 ### **3.3 Technical Requirements**
 
-#### **3.3.1 Frontend**
-- **TR-1.1:** React 18+ with TypeScript
-- **TR-1.2:** Responsive CSS framework or custom responsive design
-- **TR-1.3:** State management for user sessions
-- **TR-1.4:** Form validation and error handling
+#### **Frontend**
+- React 18+ with TypeScript  
+- TailwindCSS for responsive UI  
+- State management for sessions  
+- React Hook Form for validation  
 
-#### **3.3.2 Backend**
-- **TR-2.1:** Node.js with Express.js framework (JavaScript)
-- **TR-2.2:** JWT implementation for authorization
-- **TR-2.3:** Email service integration for OTP
-- **TR-2.4:** Input validation and sanitization
-- **TR-2.5:** RESTful API design
+#### **Backend**
+- Node.js with Express.js  
+- JWT for secure authorization  
+- Nodemailer for OTP service  
+- REST API endpoints for authentication & notes  
 
-#### **3.3.3 Database**
-- **TR-3.1:** Database selection: MongoDB
-- **TR-3.2:** User schema: name, email, dateOfBirth, hashed otp, timestamps
-- **TR-3.3:** Note schema: content, userId, timestamps,title
-- **TR-3.4:** Proper indexing for performance
+#### **Database**
+- MongoDB (Atlas cloud hosting)  
+- **User Schema:** name, email, dateOfBirth, hashed otp, timestamps  
+- **Note Schema:** title, content, userId, timestamps  
+- Indexed fields for performance  
 
 ---
 
 ## **4. System Architecture**
 
 ### **4.1 High-Level Architecture**
+
 ```
 Frontend (React TS) → API Gateway → Backend (Node.js) → Database
                                  ↓
                             Email Service (OTP)
 ```
 
-### **4.2 API Endpoints Structure**
-- **Authentication:** `/api/v1/auth/*`
-- **Notes Management:** `/api/v1/notes/*`
+
+### **4.2 API Endpoints**
+- **Authentication:** `/api/v1/auth/*`  
+- **Notes Management:** `/api/v1/notes/*`  
 
 ---
 
 ## **5. User Interface Requirements**
 
-### **5.1 Design Specifications**
-- **Color Scheme:** Blue theme (#4F46E5 primary, white backgrounds)
-- **Typography:** Clean, modern fonts
-- **Layout:** Card-based design with flowing background
-- **Responsive Breakpoints:** Mobile (<768px), Desktop (≥768px)
+### **5.1 Design**
+- **Primary Color:** #4F46E5 (blue)  
+- **Typography:** Clean, modern fonts  
+- **Layout:** Card-based design with flowing background  
+- **Breakpoints:** Mobile (<768px), Desktop (≥768px)  
 
-### **5.2 Page Requirements**
-1. **Sign Up Page:** Two-step form (user info → OTP verification)
-2. **Sign In Page:** Email + OTP authentication
-3. **Dashboard:** Welcome section + notes management
+### **5.2 Pages**
+1. **Sign Up Page:** User info → OTP verification  
+2. **Sign In Page:** Email + OTP login  
+3. **Dashboard:** Welcome section + note management  
 
 ---
 
 ## **6. Development and Deployment**
 
-### **6.1 Development Requirements**
-- **Version Control:** Git with meaningful commit messages
-- **Code Quality:** ESLint, Prettier for consistent formatting
-- **Documentation:** Comprehensive README with setup instructions
+### **6.1 Development**
+- Version Control: GitHub  
+- Code Quality: ESLint + Prettier  
+- Documentation: README with setup instructions  
 
-### **6.2 Deployment Requirements**
-- **Cloud Hosting:** Deploy on platforms like Vercel, Netlify (frontend) + Railway, Render (backend)
-- **Environment Variables:** Secure configuration management
-- **Database Hosting:** Cloud database service
+### **6.2 Deployment**
+- **Frontend:** [Vercel](https://vercel.com)  
+- **Backend:** [Render](https://render.com)  
+- **Database:** [MongoDB Atlas](https://www.mongodb.com/atlas)  
+- **Email Service:** Nodemailer with Gmail/SMTP  
 
 ---
 
 ## **7. Assumptions and Constraints**
 
-### **7.1 Assumptions**
-- Users have access to email for OTP verification
-- Modern browser support is sufficient
-- Email service (Nodemailer) integration is available
-- Cloud deployment platforms are accessible
+### **Assumptions**
+- Users have email access  
+- Browser compatibility ensured  
+- OTP service via Nodemailer  
+- Free cloud deployment platforms used  
 
-### **7.2 Constraints**
-- 3-day development timeline
-- Backend must use JavaScript (not TypeScript as originally specified)
-- Must closely replicate provided Figma designs
-- No traditional password-based authentication
+### **Constraints**
+- 3-day development deadline  
+- Backend strictly in JavaScript  
+- Must follow given Figma UI  
+- OTP login only (no passwords)  
 
 ---
 
 ## **8. Success Criteria**
-- ✅ Successful user registration and authentication
-- ✅ Functional note creation and deletion
-- [ ] Mobile and desktop responsive design
-- ✅ Secure JWT implementation
-- [ ] Cloud deployment with working URL
-- ✅ Comprehensive documentation
+- ✅ OTP-based registration & login  
+- ✅ Create & delete notes  
+- ✅ JWT-protected APIs  
+- ✅ Cloud deployment (frontend + backend)  
+- ✅ Database on MongoDB Atlas  
+- ✅ Documentation completed  
+- ✅ Full mobile responsive testing  
+
+---
+
+## **9. Technologies Used**
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg" alt="React" width="60" height="60"/>
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg" alt="TypeScript" width="60" height="60"/>
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/tailwindcss/tailwindcss-original.svg" alt="TailwindCSS" width="60" height="60"/>
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original.svg" alt="Node.js" width="60" height="60"/>
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original.svg" alt="Express" width="60" height="60"/>
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original.svg" alt="MongoDB" width="60" height="60"/>
+  <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/vercel.svg" alt="Vercel" width="60" height="60"/>
+  <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/render.svg" alt="Render" width="60" height="60"/>
+</p>
+
+---
